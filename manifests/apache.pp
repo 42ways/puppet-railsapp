@@ -45,7 +45,8 @@ class railsapp::apache (
     ######################################################################
     # application directories and apache conf
 
-    file { [ "/srv/www",
+    file { [ "/srv",
+             "/srv/www",
              "/srv/www/rails",
              "/srv/www/rails/${appname}",
              "/srv/www/rails/${appname}/releases",

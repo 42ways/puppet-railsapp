@@ -44,6 +44,8 @@ class railsapp::apache (
 
     ######################################################################
     # application directories and apache conf
+    # using puppet3 we could have an array of paths for the stuff below /srv
+    # but this more noisy version is compatible with pupet 2.7
 
     file { "/srv" :
         ensure => "directory",
@@ -52,12 +54,42 @@ class railsapp::apache (
         mode   => 755,
     }
     ->
-    file { [ "/srv/www",
-             "/srv/www/rails",
-             "/srv/www/rails/${appname}",
-             "/srv/www/rails/${appname}/releases",
-             "/srv/www/rails/${appname}/shared",
-             "/srv/www/rails/${appname}/shared/config" ] :
+    file { "/srv/www" :
+        ensure => "directory",
+        owner  => $railsuser,
+        group  => $railsgroup,
+        mode   => 755,
+    }
+    ->
+    file { "/srv/www/rails" :
+        ensure => "directory",
+        owner  => $railsuser,
+        group  => $railsgroup,
+        mode   => 755,
+    }
+    ->
+    file { "/srv/www/rails/${appname}" :
+        ensure => "directory",
+        owner  => $railsuser,
+        group  => $railsgroup,
+        mode   => 755,
+    }
+    ->
+    file { "/srv/www/rails/${appname}/releases" :
+        ensure => "directory",
+        owner  => $railsuser,
+        group  => $railsgroup,
+        mode   => 755,
+    }
+    ->
+    file { "/srv/www/rails/${appname}/shared" :
+        ensure => "directory",
+        owner  => $railsuser,
+        group  => $railsgroup,
+        mode   => 755,
+    }
+    ->
+    file { "/srv/www/rails/${appname}/shared/config" :
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,

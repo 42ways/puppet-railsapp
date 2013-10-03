@@ -5,7 +5,7 @@ puppet-railsapp is our puppet provisioning module for a basic rails application 
 
 It assumes the rails application will be deployed via capistrano (https://github.com/capistrano/capistrano) or at least in a capistrano like directory structure.
 
-The module is based on [puppetlabs/mysql](http://forge.puppetlabs.com/puppetlabs/mysql), [puppetlabs/firewall](http://forge.puppetlabs.com/puppetlabs/firewall) and [maestrodev/rvm](http://forge.puppetlabs.com/maestrodev/rvm) which all can be found on [puppetforge](http://forge.puppetlabs.com/).
+The module is based on [puppetlabs/apache](http://forge.puppetlabs.com/puppetlabs/apache), [puppetlabs/apache](http://forge.puppetlabs.com/puppetlabs/apache), [puppetlabs/firewall](http://forge.puppetlabs.com/puppetlabs/firewall) and [maestrodev/rvm](http://forge.puppetlabs.com/maestrodev/rvm) which all can be found on [puppetforge](http://forge.puppetlabs.com/).
 
 LICENSE
 -------

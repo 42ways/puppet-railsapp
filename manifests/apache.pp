@@ -31,69 +31,70 @@ class railsapp::apache (
     ######################################################################
     # apache with rvm / passager
 
-    class {
-      'rvm::passenger::apache':
-        version => $passengerversion,
-        ruby_version => $rubyversion,
-        mininstances => '3',
-        maxinstancesperapp => '0',
-        maxpoolsize => '30',
-        spawnmethod => 'smart-lv2';
+    class { '::apache': }
+
+    class { 'rvm::passenger::apache':
+      version            => $passengerversion,
+      ruby_version       => $rubyversion,
+      mininstances       => '3',
+      maxinstancesperapp => '0',
+      maxpoolsize        => '30',
+      spawnmethod        => 'smart-lv2',
     }
 
 
     ######################################################################
     # application directories and apache conf
-    # using puppet3 we could have an array of paths for the stuff below /srv
-    # but this more noisy version is compatible with pupet 2.7
+    # using puppet 3 we could have an array of paths for the stuff below /srv
+    # but this more noisy version is compatible with puppet 2.7
 
     file { "/srv" :
         ensure => "directory",
         owner  => 'root',
         group  => 'root',
-        mode   => 755,
+        mode   => 0755,
     }
     ->
     file { "/srv/www" :
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 755,
+        mode   => 0755,
     }
     ->
     file { "/srv/www/rails" :
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 755,
+        mode   => 0755,
     }
     ->
     file { "/srv/www/rails/${appname}" :
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 755,
+        mode   => 0755,
     }
     ->
     file { "/srv/www/rails/${appname}/releases" :
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 755,
+        mode   => 0755,
     }
     ->
     file { "/srv/www/rails/${appname}/shared" :
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 755,
+        mode   => 0755,
     }
     ->
     file { "/srv/www/rails/${appname}/shared/config" :
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 755,
+        mode   => 0755,
     }
     ->
     file { "/srv/www/rails/${appname}/shared/log" :  # TODO: this should done by capistrano, but it isn't....
@@ -105,24 +106,26 @@ class railsapp::apache (
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 755,
+        mode   => 0755,
     }
 
-    file { '/etc/apache2/sites-enabled':
-        ensure => 'directory',
-        recurse => true,
-        purge => true,
-        require => Class['rvm::passenger::apache']
-    }
-    ->
-    file { "/etc/apache2/sites-enabled/railsapp-${appname}.conf" :
-        ensure  => file,
-        content => template("railsapp/vhost.erb")
+    file { "/srv/www/rails/${appname}/current" :
+        ensure => "directory",
+        owner  => $railsuser,
+        group  => $railsgroup,
+        mode   => 0755,
     }
 
-    service { 'apache2':
-        ensure => running,
-        subscribe => File["/etc/apache2/sites-enabled/railsapp-${appname}.conf"],
+    apache::vhost { "railsapp-${appname}":
+      ensure        => 'present',
+      docroot       => "/srv/www/rails/${appname}/current/public",
+      directories   => [
+        {
+          'path'    => "/srv/www/rails/${appname}/current/public",
+          'Allow'   => 'from all',
+          'Options' => '-MultiViews',
+        }
+      ],
+      serveraliases => [ $servername, ],
     }
-
 }

@@ -1,0 +1,9 @@
+2013-10-04 - Version 0.3.0
+- use puppetlabs/apache to configure vhost (contributed by Steve Huff <shuff@vecna.org>)
+
+2013-08-17 - Version 0.2.0
+- add backwards compatibility for Puppet 2.7
+- create /srv if non-existent
+
+2013-07-24 - Version 0.1.0
+- Initial public release

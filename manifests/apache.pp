@@ -31,7 +31,9 @@ class railsapp::apache (
     ######################################################################
     # apache with rvm / passager
 
-    class { '::apache': }
+    class { '::apache':
+        default_vhost => false,
+    }
 
     class { 'rvm::passenger::apache':
       version            => $passengerversion,
@@ -83,6 +85,13 @@ class railsapp::apache (
         mode   => 0755,
     }
     ->
+    file { "/srv/www/rails/${appname}/releases/empty" : # dummy release to make apache module happy
+        ensure => "directory",
+        owner  => $railsuser,
+        group  => $railsgroup,
+        mode   => 0755,
+    }
+    ->
     file { "/srv/www/rails/${appname}/shared" :
         ensure => "directory",
         owner  => $railsuser,
@@ -101,6 +110,12 @@ class railsapp::apache (
         ensure => "link",
         target => "/var/log/${appname}"
     }
+    ->
+    file { "/srv/www/rails/${appname}/current" :
+        replace => "no",    # if we already deployed app releases we want to leave this alone
+        ensure => "link",
+        target => "/srv/www/rails/${appname}/releases/empty"
+    }
 
     file { "/var/log/${appname}" :
         ensure => "directory",
@@ -109,15 +124,9 @@ class railsapp::apache (
         mode   => 0755,
     }
 
-    file { "/srv/www/rails/${appname}/current" :
-        ensure => "directory",
-        owner  => $railsuser,
-        group  => $railsgroup,
-        mode   => 0755,
-    }
-
     apache::vhost { "railsapp-${appname}":
       ensure        => 'present',
+      port          => '80',
       docroot       => "/srv/www/rails/${appname}/current/public",
       directories   => [
         {

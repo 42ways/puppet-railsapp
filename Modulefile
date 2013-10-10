@@ -1,5 +1,5 @@
 name 'thoherr-railsapp'
-version '0.3.1'
+version '0.3.2'
 source 'https://github.com/42ways/puppet-railsapp.git'
 author 'Thomas Herrmann, 42ways UG'
 license 'Apache 2.0'

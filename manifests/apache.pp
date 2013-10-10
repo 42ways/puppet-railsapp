@@ -68,42 +68,42 @@ class railsapp::apache (
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 0755,
+        mode   => 0775,
     }
     ->
     file { "/srv/www/rails/${appname}" :
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 0755,
+        mode   => 0775,
     }
     ->
     file { "/srv/www/rails/${appname}/releases" :
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 0755,
+        mode   => 0775,
     }
     ->
     file { "/srv/www/rails/${appname}/releases/empty" : # dummy release to make apache module happy
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 0755,
+        mode   => 0775,
     }
     ->
     file { "/srv/www/rails/${appname}/shared" :
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 0755,
+        mode   => 0775,
     }
     ->
     file { "/srv/www/rails/${appname}/shared/config" :
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 0755,
+        mode   => 0775,
     }
     ->
     file { "/srv/www/rails/${appname}/shared/log" :  # TODO: this should done by capistrano, but it isn't....
@@ -121,13 +121,15 @@ class railsapp::apache (
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 0755,
+        mode   => 0775,
     }
 
     apache::vhost { "railsapp-${appname}":
       ensure        => 'present',
       port          => '80',
       docroot       => "/srv/www/rails/${appname}/current/public",
+      docroot_owner => $railsuser,
+      docroot_group => $railsgroup,
       directories   => [
         {
           'path'    => "/srv/www/rails/${appname}/current/public",

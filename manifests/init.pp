@@ -18,14 +18,12 @@
 ######################################################################
 
 class railsapp (
-    $appname            = 'undefined',
-    $servername         = 'myserver.example.com',
-    $rubyversion        = 'ruby-1.9.3-p448',
-    $passengerversion   = '3.0.19',
-    $railsuser          = 'rails',
-    $railsgroup         = 'rails',
-    $railsshell         = '/bin/bash',
-    $railshome          = '/home/rails'
+    $rubyversion        = 'ruby-1.9.3-p448',          # Ruby version
+    $passengerversion   = '3.0.19',                   # Passenger version
+    $railsuser          = 'rails',                    # user running the server (will be created)
+    $railsgroup         = 'rails',                    # group running the server (will be created)
+    $railsshell         = '/bin/bash',                # login shell for created rails user
+    $railshome          = '/home/rails'               # home directory for created rails user
  )
 {
 
@@ -63,13 +61,11 @@ class railsapp (
     # application directory and apache conf
 
     class { 'railsapp::apache' :
-        appname => $appname,
-        servername => $servername,
         rubyversion => $rubyversion,
         passengerversion => $passengerversion,
         railsuser => $railsuser,
         railsgroup => $railsgroup
     }
 
-    notify { "Railsapp for Application ${appname} on ${servername} with ${rubyversion} and Passenger ${passengerversion}" : }
+    notify { "Railsapp base system with ${rubyversion} and Passenger ${passengerversion}" : }
 }

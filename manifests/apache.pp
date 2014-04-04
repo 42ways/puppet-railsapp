@@ -52,21 +52,21 @@ class railsapp::apache (
         ensure => "directory",
         owner  => 'root',
         group  => 'root',
-        mode   => 0755,
+        mode   => 0644,
     }
     ->
     file { "/srv/www" :
         ensure => "directory",
-        owner  => $railsuser,
-        group  => $railsgroup,
-        mode   => 0755,
+        owner  => 'root',
+        group  => 'root',
+        mode   => 0644,
     }
     ->
     file { "/srv/www/rails" :
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 0755,
+        mode   => 0644,
     }
 
 }

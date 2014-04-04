@@ -38,35 +38,35 @@ define railsapp::app (
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 0755,
+        mode   => 0644,
     }
     ->
     file { "/srv/www/rails/${name}/releases" :
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 0755,
+        mode   => 0644,
     }
     ->
     file { "/srv/www/rails/${name}/releases/empty" : # dummy release to make apache module happy
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 0755,
+        mode   => 0644,
     }
     ->
     file { "/srv/www/rails/${name}/shared" :
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 0755,
+        mode   => 0644,
     }
     ->
     file { "/srv/www/rails/${name}/shared/config" :
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 0755,
+        mode   => 0644,
     }
     ->
     file { "/srv/www/rails/${name}/shared/log" :  # TODO: this should done by capistrano, but it isn't....
@@ -84,7 +84,7 @@ define railsapp::app (
         ensure => "directory",
         owner  => $railsuser,
         group  => $railsgroup,
-        mode   => 0755,
+        mode   => 0644,
     }
 
     apache::vhost { "railsapp-${name}":

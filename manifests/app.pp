@@ -21,13 +21,15 @@
 define railsapp::app (
     # $name,                          # application name (comes for free from puppet witg $title as the default)
     $fqdn,                            # fully qualified domain name for the apache virtual host of this app instance
-    $railsuser          = 'rails',    # user running this application instance (must match railsapp $railsuser)
-    $railsgroup         = 'rails',    # group running this application instance (must match railsapp $railsgroup)
     $dbuser,                          # user to access the database (will be replaced in database.yml)
     $dbpassword,                      # password for db user (will be replaced in database.yml)
     $configtemplatedir = $name        # directory with config.yml and database.yml templates
 )
 {
+
+    # get rails user and group name from railsapp class
+    $railsuser = $railsapp::railsuser
+    $railsgroup = $railsapp::railsgroup
 
     ######################################################################
     # application directories and apache vhost conf

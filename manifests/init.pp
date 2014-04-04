@@ -18,7 +18,7 @@
 ######################################################################
 
 class railsapp (
-    $rubyversion        = 'ruby-1.9.3-p448',          # Ruby version
+    $rubyversion        = 'ruby-1.9.3-p545',          # Ruby version
     $passengerversion   = '3.0.19',                   # Passenger version
     $railsuser          = 'rails',                    # user running the server (will be created)
     $railsgroup         = 'rails',                    # group running the server (will be created)

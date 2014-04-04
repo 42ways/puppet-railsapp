@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+2014-04-04 - Version 1.0.0
+
+- move to user 42ways in Modulefile, add basic compatibility data and release module on puppetforge
+
 2014-04-04 - Version 0.4.0
 
 - split into railsapp machine configuration (class) and app configuration (defined type) in order to allow multiple apps on one server
